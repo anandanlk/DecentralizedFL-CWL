@@ -1,5 +1,7 @@
 
-
+provider "aws" {
+    region = "eu-north-1"
+}
 
 data "aws_security_group" "existing" {
   id = "sg-0f7a504c17e832352" # Replace with the actual security group ID
