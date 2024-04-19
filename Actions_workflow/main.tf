@@ -26,37 +26,39 @@ resource "aws_instance" "communication_server" {
   }
 
   user_data = <<-EOF
-  #!/bin/bash
-  set -e
-  yum update -y
-  yum install -y docker
-  service docker start
+      #!/bin/bash
+      yum update -y
+      yum install -y docker
+      service docker start
 
-  # Pull the Docker image
-  docker pull anandanlk/communication_server:latest
-  if [ $? -ne 0 ]; then
-      echo "Failed to pull Docker image."
-      exit 1
-  fi
+      # docker pull anandanlk/communication_server:latest
+      # sudo docker run -p 8088:8088 -d anandanlk/communication_server:latest 
+      
+      # Pull the Docker image
+      docker pull anandanlk/communication_server:latest
+      if [ $? -ne 0 ]; then
+          echo "Failed to pull Docker image."
+          exit 1
+      fi
 
-  # Run the Docker container and store its ID
-  CONTAINER_ID=$$(sudo docker run -p 8088:8088 -d anandanlk/communication_server:latest)
-  if [ $? -ne 0 ]; then
-      echo "Failed to start Docker container."
-      exit 1
-  fi
+      # Run the Docker container and store its ID
+        CONTAINER_ID=$$(sudo docker run -p 8088:8088 -d anandanlk/communication_server:latest)
+        if [ $? -ne 0 ]; then
+            echo "Failed to start Docker container."
+            exit 1
+        fi
 
-  # Wait briefly to let the container attempt to start up
-  sleep 5
+      # Wait briefly to let the container attempt to start up
+      sleep 5
 
-  # Check if the container is still running
-  if ! sudo docker ps -q --no-trunc | grep -q "^$${CONTAINER_ID}$$"; then
-      echo "Docker container stopped running."
-      # Optionally, output the last logs from the container
-      sudo docker logs $${CONTAINER_ID}
-      exit 1
-  fi
-EOF
+      # Check if the container is still running
+      if ! sudo docker ps -q --no-trunc | grep -q "^${CONTAINER_ID}\$"; then
+          echo "Docker container stopped running."
+          # Optionally, output the last logs from the container
+          sudo docker logs ${CONTAINER_ID}
+          exit 1
+      fi
+  EOF
 
   root_block_device {
     volume_type           = "gp3"
