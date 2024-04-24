@@ -5,7 +5,7 @@ FROM python:3.8-slim-buster
 WORKDIR /client
 ADD ./requirements.txt /client/requirements.txt
 
-RUN --mount=type=cache,target=/root/.cache/pip3 pip3 install -r requirements.txt --no-cache-dir
+RUN pip3 install -r requirements.txt --no-cache-dir
 
 ARG COMMUNICATION_IP=default_value
 ENV COMMUNICATION_IP ${COMMUNICATION_IP}
