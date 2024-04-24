@@ -32,4 +32,4 @@ jobs:
           file: ./Dockers_source_code/communication_server/Dockerfile
           context: ./Dockers_source_code/communication_server/
           push: true
-          tags: anandanlk/communication_server:latest
+          tags: anandanlk/federation_server_endpoint_test:latest
