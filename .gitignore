@@ -4,3 +4,4 @@ Clients/.terraform/providers/registry.terraform.io/hashicorp/aws/5.45.0/darwin_a
 Clients/terraform.tfstate.backup
 Clients/terraform.tfstate
 .DS_Store
+Clients/.terraform.tfstate.lock.info
