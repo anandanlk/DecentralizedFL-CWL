@@ -13,7 +13,7 @@ data "aws_security_group" "existing" {
 resource "aws_instance" "client" {
   count         = var.client_count
   ami           = "ami-01dad638e8f31ab9a" # Replace with your desired AMI ID
-  instance_type = "t3.micro"
+  instance_type = "t3.small"
   key_name      = "server"
 
   tags = {
@@ -23,7 +23,7 @@ resource "aws_instance" "client" {
   vpc_security_group_ids = [data.aws_security_group.existing.id]
 
   credit_specification {
-    cpu_credits = "standard"
+    cpu_credits = "unlimited"
   }
 
   user_data = <<-EOF
@@ -43,7 +43,7 @@ resource "aws_instance" "client" {
 
   root_block_device {
     volume_type           = "gp3"
-    volume_size           = 10 # Replace with your desired volume size in GB
+    volume_size           = 20 # Replace with your desired volume size in GB
     delete_on_termination = true
     iops                  = 3000 # Replace with your desired IOPS (optional)
   }
